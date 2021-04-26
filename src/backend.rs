@@ -294,6 +294,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
 
         if degree != 0.0 {
             self.call_cairo(|c| {
+                // FIXME: can error
                 c.save();
                 c.translate(f64::from(x), f64::from(y));
                 c.rotate(degree);
@@ -323,6 +324,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
             );
             c.show_text(text);
             if degree != 0.0 {
+                // FIXME: can error
                 c.restore();
             }
         })
