@@ -15,8 +15,8 @@ readme = "README.md"
 plotters-backend = "^0.3.0"
 
 [dependencies.cairo-rs]
-git =  "https://github.com/gtk-rs/gtk-rs"
-features = ["v1_14", "ps"]
+git =  "https://github.com/gtk-rs/gtk-rs-core"
+features = ["ps"]
 
 [dev-dependencies]
 plotters = {version = "^0.3.0", default_features = false}
