@@ -132,7 +132,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
 
         self.context.move_to(f64::from(from.0), f64::from(from.1));
         self.context.line_to(f64::from(to.0), f64::from(to.1));
-        self.context.stroke();
+        self.context.stroke().map_err(to_err)?;
         Ok(())
     }
 
@@ -155,7 +155,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
         if fill {
             self.context.fill().map_err(to_err)?;
         } else {
-            self.context.stroke();
+            self.context.stroke().map_err(to_err)?;
         }
         Ok(())
     }
@@ -177,7 +177,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
             self.context.line_to(f64::from(x), f64::from(y));
         }
 
-        self.context.stroke();
+        self.context.stroke().map_err(to_err)?;
         Ok(())
     }
 
@@ -228,7 +228,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
         if fill {
             self.context.fill().map_err(to_err)?;
         } else {
-            self.context.stroke();
+            self.context.stroke().map_err(to_err)?;
         }
         Ok(())
     }
@@ -261,7 +261,7 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
             * std::f64::consts::PI;
 
         if degree != 0.0 {
-            self.context.save();
+            self.context.save().map_err(to_err)?;
             self.context.translate(f64::from(x), f64::from(y));
             self.context.rotate(degree);
             x = 0;
@@ -286,10 +286,10 @@ impl<'a> DrawingBackend for CairoBackend<'a> {
             f64::from(x) + dx - extents.x_bearing,
             f64::from(y) + dy - extents.y_bearing - extents.height,
         );
-        self.context.show_text(text);
+        self.context.show_text(text).map_err(to_err)?;
         if degree != 0.0 {
             // FIXME: can error
-            self.context.restore();
+            self.context.restore().map_err(to_err)?;
         }
         Ok(())
     }
